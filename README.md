@@ -18,6 +18,10 @@
 
 An Ansible role to install and configure Node_Exporter on your host.
 
+The provided Ansible role automates the setup of Prometheus' Node Exporter, a vital tool for collecting essential system and hardware metrics crucial for comprehensive monitoring. By simplifying the intricate process of deploying Node Exporter instances, the role offers versatile customization options tailored to unique monitoring needs. It facilitates seamless installation and configuration while ensuring secure communication through SSL/TLS encryption.
+
+Additionally, the role enables effortless metrics selection, empowering users to adapt Node Exporter to specific monitoring requirements. With provisions for fortified access control through basic authentication, the role contributes to heightened security. Ultimately, this Ansible role streamlines Node Exporter deployment, fostering efficient performance monitoring, proactive maintenance, and well-informed decision-making through its customization capabilities, security enhancements, and tailored metrics collection.
+
 ## Folder structure
 
 By default Ansible will look in each directory within a role for a main.yml file for relevant content (also man.yml and main):
@@ -101,7 +105,41 @@ Some vars a required to run this role:
 
 ```YAML
 ---
-your defaults vars here
+
+install_node_exporter_install_path: "/etc/node_exporter"
+install_node_exporter_lib_path: "/usr/local/node_exporter"
+install_node_exporter_web_ssl_path:  "{{ install_node_exporter_install_path }}/ssl"
+install_node_exporter_web_config_file: "{{ install_node_exporter_install_path }}/web-config.yml"
+install_node_exporter_loglevel: "debug"
+
+install_node_exporter_version: "1.6.1"
+install_node_exporter_architecture: "amd64"
+
+install_node_exporter_user: "node_exporter"
+install_node_exporter_group: "node_exporter"
+
+install_node_exporter_ssl: true
+install_node_exporter_ssl_key: "{{ install_node_exporter_web_ssl_path }}/my-node_exporter-cluster.domain.tld/my-node_exporter-cluster.domain.tld.pem.key"
+install_node_exporter_ssl_crt: "{{ install_node_exporter_web_ssl_path }}/my-node_exporter-cluster.domain.tld/my-node_exporter-cluster.domain.tld.pem.crt"
+
+install_node_exporter_port: 9100
+install_node_exporter_stats_exports:
+  - "cpu" #Exposes CPU statistics
+  - "cpufreq" #Exposes CPU frequency statistics
+  - "diskstats" #Exposes disk I/O statistics.
+  - "filesystem" #Exposes filesystem statistics, such as disk space used.
+  - "loadavg" #Exposes load average.
+  - "meminfo" #Exposes memory statistics.
+  - "netdev" #Exposes network interface statistics such as bytes transferred.
+  - "processes" #Exposes aggregate process statistics from /proc.
+  - "netstat" #Exposes network statistics from /proc/net/netstat. This is the same information as netstat -s.
+  - "mountstats" #Exposes filesystem statistics from /proc/self/mountstats. Exposes detailed NFS client statistics.
+  - "systemd" #Exposes service and system status from systemd.
+
+install_node_exporter_basic_auth: true
+install_node_exporter_basic_auth_login: "admin"
+install_node_exporter_basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuMT6hGkkNOcxLtLRWV6nfSZWfonGb69W"
+
 ```
 
 The best way is to modify these vars by copy the ./default/main.yml file into the ./vars and edit with your personnals requirements.
@@ -113,7 +151,42 @@ In order to surchage vars, you have multiples possibilities but for mains cases 
 ```YAML
 # From inventory
 ---
-all vars from to put/from your inventory
+inv_prepare_host_users:
+  - login: "root"
+    group: "node_exporter"
+
+inv_install_node_exporter_install_path: "/etc/node_exporter"
+inv_install_node_exporter_lib_path: "/usr/local/node_exporter"
+inv_install_node_exporter_web_ssl_path:  "{{ inv_install_node_exporter_install_path }}/ssl"
+inv_install_node_exporter_web_config_file: "{{ inv_install_node_exporter_install_path }}/web-config.yml"
+inv_install_node_exporter_loglevel: "debug"
+
+inv_install_node_exporter_version: "1.6.1"
+inv_install_node_exporter_architecture: "amd64"
+
+inv_install_node_exporter_ssl: true
+inv_install_node_exporter_ssl_key: "{{ inv_install_node_exporter_web_ssl_path }}/my-node_exporter-cluster.domain.tld/my-node_exporter-cluster.domain.tld.pem.key"
+inv_install_node_exporter_ssl_crt: "{{ inv_install_node_exporter_web_ssl_path }}/my-node_exporter-cluster.domain.tld/my-node_exporter-cluster.domain.tld.pem.crt"
+
+inv_install_node_exporter_port: 9100
+inv_install_node_exporter_stats_exports:
+  - "cpu" #Exposes CPU statistics
+  - "cpufreq" #Exposes CPU frequency statistics
+  - "diskstats" #Exposes disk I/O statistics.
+  - "filesystem" #Exposes filesystem statistics, such as disk space used.
+  - "loadavg" #Exposes load average.
+  - "meminfo" #Exposes memory statistics.
+  - "netdev" #Exposes network interface statistics such as bytes transferred.
+  - "processes" #Exposes aggregate process statistics from /proc.
+  - "netstat" #Exposes network statistics from /proc/net/netstat. This is the same information as netstat -s.
+  - "mountstats" #Exposes filesystem statistics from /proc/self/mountstats. Exposes detailed NFS client statistics.
+  - "systemd" #Exposes service and system status from systemd.
+
+inv_install_node_exporter_basic_auth: true
+inv_install_node_exporter_basic_auth_login: "admin"
+inv_install_node_exporter_basic_auth_password: "admin" #for test
+inv_install_node_exporter_basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuMT6hGkkNOcxLtLRWV6nfSZWfonGb69W"
+
 ```
 
 ```YAML
@@ -127,8 +200,26 @@ all vars from to put/from AWX / Tower
 To run this role, you can copy the molecule/default/converge.yml playbook and add it into your playbook:
 
 ```YAML
----
-your converge.yml file here
+- name: "Include labocbz.install_node_exporter"
+    tags:
+    - "labocbz.install_node_exporter"
+    vars:
+    install_node_exporter_install_path: "{{ inv_install_node_exporter_install_path }}"
+    install_node_exporter_lib_path: "{{ inv_install_node_exporter_lib_path }}"
+    install_node_exporter_web_ssl_path: "{{ inv_install_node_exporter_web_ssl_path }}"
+    install_node_exporter_web_config_file: "{{ inv_install_node_exporter_web_config_file }}"
+    install_node_exporter_loglevel: "{{ inv_install_node_exporter_loglevel }}"
+    install_node_exporter_version: "{{ inv_install_node_exporter_version }}"
+    install_node_exporter_architecture: "{{ inv_install_node_exporter_architecture }}"
+    install_node_exporter_ssl: "{{ inv_install_node_exporter_ssl }}"
+    install_node_exporter_ssl_key: "{{ inv_install_node_exporter_ssl_key }}"
+    install_node_exporter_port: "{{ inv_install_node_exporter_port }}"
+    install_node_exporter_stats_exports: "{{ inv_install_node_exporter_stats_exports }}"
+    install_node_exporter_basic_auth: "{{ inv_install_node_exporter_basic_auth }}"
+    install_node_exporter_basic_auth_login: "{{ inv_install_node_exporter_basic_auth_login }}"
+    install_node_exporter_basic_auth_password_hash: "{{ inv_install_node_exporter_basic_auth_password_hash }}"
+    ansible.builtin.include_role:
+    name: "labocbz.install_node_exporter"
 ```
 
 ## Architectural Decisions Records
@@ -138,6 +229,13 @@ Here you can put your change to keep a trace of your work and decisions.
 ### 2023-08-07: First Init
 
 * First init of this role with the bootstrap_role playbook by Lord Robin Crombez
+
+### 2023-08-07-b: Confs, SSL/TLS, Auth
+
+* Role can handle SSL/TLS
+* Role handle loglevel and port configuration
+* Crypto material have to be created and deployed before (no generation)
+* Role doesn't handle the hashing of the password
 
 ## Authors
 
