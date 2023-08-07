@@ -1,0 +1,16 @@
+---
+- name: "Enable and start Node_Exporter"
+  register: install_node_exporter_service_status
+  changed_when: install_node_exporter_service_status.state != "restarted"
+  ansible.builtin.service:
+    name: "node_exporter"
+    state: "started"
+    enabled: yes
+
+- name: "Restart Node_Exporter"
+  register: install_node_exporter_service_status
+  changed_when: install_node_exporter_service_status.state != "restarted"
+  ansible.builtin.service:
+    name: "node_exporter"
+    state: "restarted"
+    daemon_reload: true
