@@ -1,0 +1,28 @@
+##############################
+#                            #
+# Ansible / Tower managed on #
+#                            #
+##############################
+
+[Unit]
+Description=Node Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User={{ install_node_exporter_user }}
+Group={{ install_node_exporter_group }}
+Type=simple
+ExecStart=/bin/sh -c '/usr/bin/node_exporter \
+    --web.config.file={{ install_node_exporter_web_config_file }} \
+    --web.listen-address=:{{ install_node_exporter_port }} \
+    --collector.disable-defaults \
+{% for node_exporter_stats_export in install_node_exporter_stats_exports %}
+    --collector.{{ node_exporter_stats_export }} \
+{% endfor %}
+    --log.level={{ install_node_exporter_loglevel }}'
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
