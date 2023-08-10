@@ -8,6 +8,7 @@ inv_install_node_exporter_lib_path: "/usr/local/node_exporter"
 inv_install_node_exporter_web_ssl_path:  "{{ inv_install_node_exporter_install_path }}/ssl"
 inv_install_node_exporter_web_config_file: "{{ inv_install_node_exporter_install_path }}/web-config.yml"
 inv_install_node_exporter_loglevel: "debug"
+inv_install_node_exporter_log_path: "/var/log/node_exporter"
 
 inv_install_node_exporter_version: "1.6.1"
 inv_install_node_exporter_architecture: "amd64"

@@ -237,6 +237,10 @@ Here you can put your change to keep a trace of your work and decisions.
 * Crypto material have to be created and deployed before (no generation)
 * Role doesn't handle the hashing of the password
 
+### 2023-08-10: Log redirection
+
+* Exporter lor are now redirected into a file
+
 ## Authors
 
 * Lord Robin Crombez

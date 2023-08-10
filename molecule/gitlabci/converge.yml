@@ -18,6 +18,7 @@
         install_node_exporter_web_ssl_path: "{{ inv_install_node_exporter_web_ssl_path }}"
         install_node_exporter_web_config_file: "{{ inv_install_node_exporter_web_config_file }}"
         install_node_exporter_loglevel: "{{ inv_install_node_exporter_loglevel }}"
+        install_node_exporter_log_path: "{{ inv_install_node_exporter_log_path }}"
         install_node_exporter_version: "{{ inv_install_node_exporter_version }}"
         install_node_exporter_architecture: "{{ inv_install_node_exporter_architecture }}"
         install_node_exporter_ssl: "{{ inv_install_node_exporter_ssl }}"

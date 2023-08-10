@@ -48,6 +48,17 @@
         owner: "root"
         lstrip_blocks: yes
 
+    - name: "Create log path"
+      register: output
+      changed_when: output.size < 0
+      ansible.builtin.file:
+        path: "{{ install_node_exporter_log_path }}"
+        state: directory
+        recurse: yes
+        mode: "0700"
+        group: "{{ install_node_exporter_group }}"
+        owner: "{{ install_node_exporter_user }}"
+
 - name: "Configure Node_Exporter"
   notify: "Restart Node_Exporter"
   block:
