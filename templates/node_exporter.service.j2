@@ -20,7 +20,8 @@ ExecStart=/bin/sh -c '/usr/bin/node_exporter \
 {% for node_exporter_stats_export in install_node_exporter_stats_exports %}
     --collector.{{ node_exporter_stats_export }} \
 {% endfor %}
-    --log.level={{ install_node_exporter_loglevel }}'
+    --log.level={{ install_node_exporter_loglevel }} \
+    > {{ install_node_exporter_log_path }}/node_exporter.log 2>&1'
 
 Restart=always
 
