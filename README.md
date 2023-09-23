@@ -201,9 +201,9 @@ To run this role, you can copy the molecule/default/converge.yml playbook and ad
 
 ```YAML
 - name: "Include labocbz.install_node_exporter"
-    tags:
+  tags:
     - "labocbz.install_node_exporter"
-    vars:
+  vars:
     install_node_exporter_install_path: "{{ inv_install_node_exporter_install_path }}"
     install_node_exporter_lib_path: "{{ inv_install_node_exporter_lib_path }}"
     install_node_exporter_web_ssl_path: "{{ inv_install_node_exporter_web_ssl_path }}"
@@ -213,12 +213,13 @@ To run this role, you can copy the molecule/default/converge.yml playbook and ad
     install_node_exporter_architecture: "{{ inv_install_node_exporter_architecture }}"
     install_node_exporter_ssl: "{{ inv_install_node_exporter_ssl }}"
     install_node_exporter_ssl_key: "{{ inv_install_node_exporter_ssl_key }}"
+    install_node_exporter_ssl_crt: "{{ inv_install_node_exporter_ssl_crt }}"
     install_node_exporter_port: "{{ inv_install_node_exporter_port }}"
     install_node_exporter_stats_exports: "{{ inv_install_node_exporter_stats_exports }}"
     install_node_exporter_basic_auth: "{{ inv_install_node_exporter_basic_auth }}"
     install_node_exporter_basic_auth_login: "{{ inv_install_node_exporter_basic_auth_login }}"
     install_node_exporter_basic_auth_password_hash: "{{ inv_install_node_exporter_basic_auth_password_hash }}"
-    ansible.builtin.include_role:
+  ansible.builtin.include_role:
     name: "labocbz.install_node_exporter"
 ```
 
