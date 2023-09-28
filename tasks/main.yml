@@ -3,6 +3,7 @@
   notify: "Enable and start Node_Exporter"
   block:
     - name: "Create the node_exporter user"
+      when: not folder_check.stat.exists
       ansible.builtin.user:
         name: "{{ install_node_exporter_user }}"
         groups: "{{ install_node_exporter_group }}"
@@ -12,6 +13,11 @@
 
     - name: "Install package from Github"
       block:
+        - name: "Check if folder {{ install_node_exporter_lib_path }} exist"
+          register: folder_check
+          ansible.builtin.stat:
+            path: "{{ install_node_exporter_lib_path }}"
+
         - name: "Create lib path"
           ansible.builtin.file:
             path: "{{ install_node_exporter_lib_path }}"
@@ -62,6 +68,20 @@
 - name: "Configure Node_Exporter"
   notify: "Restart Node_Exporter"
   block:
+    - name: "Check if folder {{ install_node_exporter_install_path }} exist"
+      register: folder_check
+      ansible.builtin.stat:
+        path: "{{ install_node_exporter_install_path }}"
+
+    - name: "Create {{ install_node_exporter_install_path }}"
+      when: not folder_check.stat.exists
+      ansible.builtin.file:
+        path: "{{ install_node_exporter_install_path }}"
+        state: directory
+        owner: "{{ install_node_exporter_user }}"
+        group: "{{ install_node_exporter_group }}"
+        mode: "0700"
+
     - name: "Import Node_Exporter web configuration file"
       when: (install_node_exporter_ssl | default(false)) or (install_node_exporter_basic_auth | default(false))
       ansible.builtin.template:
