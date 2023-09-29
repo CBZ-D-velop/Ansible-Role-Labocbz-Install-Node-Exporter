@@ -67,6 +67,8 @@ variables:
   script:
     #- "docker login -u \"$NEXUS_REPOS_USERNAME\" -p \"$NEXUS_REPOS_PASSWORD\" http://$DOCKER_NEXUS_ADDRESS"
     - "python3 -m compileall /usr/lib/python3 -qq"
+    - docker -v
+    - molecule --version
     # Fix weird ansible bug: https://github.com/trailofbits/algo/issues/1637
     # This probably happens due to gitlab-runner mounting the git repo into the container
     - "cp ./.ansible.cfg /root/.ansible.cfg"
