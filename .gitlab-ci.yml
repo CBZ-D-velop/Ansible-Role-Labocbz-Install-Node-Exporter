@@ -43,9 +43,10 @@ variables:
     # Fix weird ansible bug: https://github.com/trailofbits/algo/issues/1637
     # This probably happens due to gitlab-runner mounting the git repo into the container
     - chmod o-w .
-    - >
-      find ./templates/*.j2 \( -name '*' ! -iname ".*" \)
-      -print0 | sort --zero-terminated | xargs -0 -I{} sh -c  '/usr/bin/python /j2lint.py {}'
+    #- >
+    #  find ./templates/*.j2 \( -name '*' ! -iname ".*" \)
+    #  -print0 | sort --zero-terminated | xargs -0 -I{} sh -c  '/usr/bin/python /j2lint.py {}'
+    - j2lint ./templates/*.j2
   allow_failure: false
   retry: 2
 
