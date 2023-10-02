@@ -61,7 +61,7 @@ variables:
 .molecule_test: &molecule_test
   stage: molecule-test
   image:
-    name: $NEXUS_ADDRESS/$DOCKER_IMAGE_DOCKER_ANSIBLE
+    name: $NEXUS_ADDRESS/$DOCKER_IMAGE_MOLECULE
   variables:
     PY_COLORS: '1'
     ANSIBLE_FORCE_COLOR: '1'
