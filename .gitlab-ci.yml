@@ -72,7 +72,7 @@ variables:
     - molecule --version
     # Fix weird ansible bug: https://github.com/trailofbits/algo/issues/1637
     # This probably happens due to gitlab-runner mounting the git repo into the container
-    - "cp ./.ansible.cfg /home/$USER/.ansible.cfg"
+    - "cp ./.ansible.cfg /home/$(whoami)/.ansible.cfg"
     - "chmod o-w ."
     - "[ -f \"./molecule/$PIPELINE_SCENARIO_NAME/requirements.yml\" ] && ansible-galaxy install -r ./molecule/$PIPELINE_SCENARIO_NAME/requirements.yml --roles-path=./molecule/$PIPELINE_SCENARIO_NAME/roles"
     - "molecule test --scenario-name $PIPELINE_SCENARIO_NAME"
