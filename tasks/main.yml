@@ -3,7 +3,6 @@
   notify: "Enable and start Node_Exporter"
   block:
     - name: "Create the node_exporter user"
-      when: not folder_check.stat.exists
       ansible.builtin.user:
         name: "{{ install_node_exporter_user }}"
         groups: "{{ install_node_exporter_group }}"

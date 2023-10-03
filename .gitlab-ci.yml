@@ -121,11 +121,25 @@ jinja2_lint:
   <<: *jinja2_lint
 
 ############################################
-#### bootstrap_role
+#### ansible-lint
 ############################################
 
 ansible_lint:
   <<: *ansible_lint
+  needs:
+    - "yaml_lint"
+    - "yaml_lint_molecule"
+    - "yaml_lint_inventories"
+
+############################################
+#### moelcule test
+############################################
 
 molecule_test:
   <<: *molecule_test
+  needs:
+    - "jinja2_lint"
+    - "ansible_lint"
+    - "yaml_lint"
+    - "yaml_lint_molecule"
+    - "yaml_lint_inventories"
