@@ -236,7 +236,7 @@ Here you can put your change to keep a trace of your work and decisions.
 * Role can handle SSL/TLS
 * Role handle loglevel and port configuration
 * Crypto material have to be created and deployed before (no generation)
-* Role doesn't handle the hashing of the password
+* Role doesn't handle the hashing of the password.
 
 ### 2023-08-10: Log redirection
 
