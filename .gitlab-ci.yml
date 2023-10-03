@@ -147,9 +147,4 @@ ansible_lint:
 molecule_test:
   <<: *molecule_test
   needs:
-    - "jinja2_lint_templates"
     - "ansible_lint"
-    - "yaml_lint_role"
-    - "yaml_lint_molecule"
-    - "yaml_lint_inventories"
-    - "yaml_lint_extra_vars"
