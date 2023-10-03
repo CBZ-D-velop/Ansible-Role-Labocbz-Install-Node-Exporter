@@ -54,7 +54,7 @@ variables:
   stage: ansible-lint
   image: $NEXUS_ADDRESS/$DOCKER_IMAGE_ANSIBLE_LINT
   script:
-    - ansible-lint --config=./.ansible-lint ./*
+    - ansible-lint --config=./.ansible-lint --exclude ./molecule --exclude ./tests ./*
   allow_failure: false
   retry: 2
 
