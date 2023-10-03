@@ -9,7 +9,7 @@ driver:
 
 platforms:
   - name: "molecule-local-instance-1-install-node-exporter"
-    image: "nexus-manager.net3107.storages.labo-cbz.net:8082/gitlabcicd/debian-11-ansible:v3.0"
+    image: "nexus.net3103.services.labo-cbz.net:8082/robincbz/debian-ansible:0.21"
     #published_ports:
     #  - "0.0.0.0:8181:8181/tcp"
     dockerfile: "Dockerfile"
@@ -42,7 +42,7 @@ provisioner:
       group_vars: "../../tests/inventory/group_vars/"
       host_vars: "../../tests/inventory/host_vars/"
   options:
-    extra-vars: "@./tests/tower/tower.yml"
+    extra-vars: "@./../../tests/tower/tower.yml"
   log: ${MOLECULE_ANSIBLE_LOG:-true}
   env:
     ANSIBLE_CONFIG: "../../.ansible.cfg"
