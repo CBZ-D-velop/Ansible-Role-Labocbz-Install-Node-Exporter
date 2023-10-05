@@ -10,7 +10,7 @@ driver:
 platforms:
   - name: "molecule-local-instance-1-install-node-exporter"
     #image: "docker.io/geerlingguy/docker-debian11-ansible"
-    image: "local/debian-11-ansible:v3.0"
+    image: "robincbz/debian-11-ansible:1.7"
     published_ports:
       - "0.0.0.0:9100:9100/tcp"
     dockerfile: "Dockerfile"
