@@ -14,7 +14,7 @@ stages:
 - molecule-test
 
 variables:
-  PIPELINE_SCENARIO_NAME: "gitlabci"
+  PIPELINE_SCENARIO_NAME: "cicd-debian-11"
 
 ###############################################################################
 #################### actions
