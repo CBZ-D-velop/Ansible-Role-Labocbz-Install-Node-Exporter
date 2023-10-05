@@ -58,7 +58,7 @@ variables:
     # This probably happens due to gitlab-runner mounting the git repo into the container
     - "chmod o-w ."
   script:
-    - ansible-lint --config=./.ansible-lint --exclude ./molecule --exclude ./tests ./*
+    - ansible-lint --config=./.ansible-lint --exclude molecule --exclude tests ./*
   allow_failure: false
   retry: 2
 
