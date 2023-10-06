@@ -11,6 +11,7 @@ platforms:
   - name: "molecule-local-instance-1-install-node-exporter"
     #image: "docker.io/geerlingguy/docker-debian11-ansible"
     image: "robincbz/debian-11-ansible:1.0"
+    command: "/sbin/init"
     published_ports:
       - "0.0.0.0:9100:9100/tcp"
     dockerfile: "Dockerfile"
@@ -36,7 +37,7 @@ provisioner:
       group_vars: "../../tests/inventory/group_vars/"
       host_vars: "../../tests/inventory/host_vars/"
   options:
-    extra-vars: "@./../../tests/tower/tower.yml"
+    extra-vars: "@./tests/tower/tower.yml"
   log: ${MOLECULE_ANSIBLE_LOG:-true}
   env:
     ANSIBLE_CONFIG: "../../.ansible.cfg"
