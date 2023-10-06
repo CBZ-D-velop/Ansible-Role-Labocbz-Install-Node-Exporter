@@ -14,7 +14,7 @@ stages:
 - molecule-test
 
 variables:
-  PIPELINE_SCENARIO_NAME: "gitlabci"
+  PIPELINE_SCENARIO_NAME: "cicd-debian-11"
 
 ###############################################################################
 #################### actions
@@ -58,13 +58,13 @@ variables:
     # This probably happens due to gitlab-runner mounting the git repo into the container
     - "chmod o-w ."
   script:
-    - ansible-lint --config=./.ansible-lint --exclude ./molecule --exclude ./tests ./*
+    - ansible-lint --config=./.ansible-lint --exclude molecule --exclude tests ./*
   allow_failure: false
   retry: 2
 
 .molecule_test: &molecule_test
   stage: molecule-test
-  image: $NEXUS_ADDRESS/$DOCKER_IMAGE_MOLECULE
+  image: $NEXUS_ADDRESS/$DOCKER_IMAGE_DOCKER_MOLECULE
   variables:
     PY_COLORS: '1'
     ANSIBLE_FORCE_COLOR: '1'
