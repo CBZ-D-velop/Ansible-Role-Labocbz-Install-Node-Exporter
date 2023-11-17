@@ -30,6 +30,8 @@ install_node_exporter_stats_exports:
   - "netstat" #Exposes network statistics from /proc/net/netstat. This is the same information as netstat -s.
   - "mountstats" #Exposes filesystem statistics from /proc/self/mountstats. Exposes detailed NFS client statistics.
   - "systemd" #Exposes service and system status from systemd.
+  - "uname"
+  - "time"
 
 install_node_exporter_basic_auth: true
 install_node_exporter_basic_auth_login: "admin"
