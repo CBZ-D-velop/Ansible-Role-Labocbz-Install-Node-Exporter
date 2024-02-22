@@ -1,24 +1,24 @@
 ---
 
-install_node_exporter_install_path: "/etc/node_exporter"
-install_node_exporter_lib_path: "/usr/local/node_exporter"
-install_node_exporter_web_ssl_path:  "{{ install_node_exporter_install_path }}/ssl"
-install_node_exporter_web_config_file: "{{ install_node_exporter_install_path }}/web-config.yml"
-install_node_exporter_loglevel: "debug"
-install_node_exporter_log_path: "/var/log/node_exporter"
+install_node_exporter__install_path: "/etc/node_exporter"
+install_node_exporter__lib_path: "/usr/local/node_exporter"
+install_node_exporter__web_ssl_path:  "{{ install_node_exporter__install_path }}/ssl"
+install_node_exporter__web_config_file: "{{ install_node_exporter__install_path }}/web-config.yml"
+install_node_exporter__loglevel: "debug"
+install_node_exporter__log_path: "/var/log/node_exporter"
 
-install_node_exporter_version: "1.6.1"
-install_node_exporter_architecture: "amd64"
+install_node_exporter__version: "1.6.1"
+install_node_exporter__architecture: "amd64"
 
-install_node_exporter_user: "node_exporter"
-install_node_exporter_group: "node_exporter"
+install_node_exporter__user: "root"
+install_node_exporter__group: "root"
 
-install_node_exporter_ssl: true
-install_node_exporter_ssl_key: "{{ install_node_exporter_web_ssl_path }}/my-node_exporter-cluster.domain.tld/my-node_exporter-cluster.domain.tld.pem.key"
-install_node_exporter_ssl_crt: "{{ install_node_exporter_web_ssl_path }}/my-node_exporter-cluster.domain.tld/my-node_exporter-cluster.domain.tld.pem.crt"
+install_node_exporter__ssl: true
+install_node_exporter__ssl_key: "{{ install_node_exporter__web_ssl_path }}/my-node_exporter-cluster.domain.tld/my-node_exporter-cluster.domain.tld.pem.key"
+install_node_exporter__ssl_crt: "{{ install_node_exporter__web_ssl_path }}/my-node_exporter-cluster.domain.tld/my-node_exporter-cluster.domain.tld.pem.crt"
 
-install_node_exporter_port: 9100
-install_node_exporter_stats_exports:
+install_node_exporter__port: 9100
+install_node_exporter__stats_exports:
   - "cpu" #Exposes CPU statistics
   - "cpufreq" #Exposes CPU frequency statistics
   - "diskstats" #Exposes disk I/O statistics.
@@ -33,6 +33,6 @@ install_node_exporter_stats_exports:
   - "uname"
   - "time"
 
-install_node_exporter_basic_auth: true
-install_node_exporter_basic_auth_login: "admin"
-install_node_exporter_basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuMT6hGkkNOcxLtLRWV6nfSZWfonGb69W"
+install_node_exporter__basic_auth: true
+install_node_exporter__basic_auth_login: "admin"
+install_node_exporter__basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuMT6hGkkNOcxLtLRWV6nfSZWfonGb69W"

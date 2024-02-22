@@ -1,0 +1,40 @@
+---
+
+inv_install_node_exporter__install_path: "/etc/node_exporter"
+inv_install_node_exporter__lib_path: "/usr/local/node_exporter"
+inv_install_node_exporter__web_ssl_path:  "{{ inv_install_node_exporter__install_path }}/ssl"
+inv_install_node_exporter__web_config_file: "{{ inv_install_node_exporter__install_path }}/web-config.yml"
+inv_install_node_exporter__loglevel: "debug"
+inv_install_node_exporter__log_path: "/var/log/node_exporter"
+
+inv_install_node_exporter__version: "1.6.1"
+inv_install_node_exporter__architecture: "amd64"
+
+inv_install_node_exporter__user: "root"
+inv_install_node_exporter__group: "root"
+
+inv_install_node_exporter__ssl: true
+inv_install_node_exporter__ssl_key: "{{ inv_install_node_exporter__web_ssl_path }}/my-node_exporter-cluster.domain.tld/my-node_exporter-cluster.domain.tld.pem.key"
+inv_install_node_exporter__ssl_crt: "{{ inv_install_node_exporter__web_ssl_path }}/my-node_exporter-cluster.domain.tld/my-node_exporter-cluster.domain.tld.pem.crt"
+
+inv_install_node_exporter__port: 9100
+inv_install_node_exporter__stats_exports:
+  - "cpu" #Exposes CPU statistics
+  - "cpufreq" #Exposes CPU frequency statistics
+  - "diskstats" #Exposes disk I/O statistics.
+  - "filesystem" #Exposes filesystem statistics, such as disk space used.
+  - "loadavg" #Exposes load average.
+  - "meminfo" #Exposes memory statistics.
+  - "netdev" #Exposes network interface statistics such as bytes transferred.
+  - "processes" #Exposes aggregate process statistics from /proc.
+  - "netstat" #Exposes network statistics from /proc/net/netstat. This is the same information as netstat -s.
+  - "mountstats" #Exposes filesystem statistics from /proc/self/mountstats. Exposes detailed NFS client statistics.
+  - "systemd" #Exposes service and system status from systemd.
+  - "uname"
+  - "time"
+
+inv_install_node_exporter__basic_auth: true
+inv_install_node_exporter__basic_auth_login: "admin"
+inv_install_node_exporter__basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuMT6hGkkNOcxLtLRWV6nfSZWfonGb69W"
+
+inv_install_node_exporter__basic_auth_password: "admin"
