@@ -106,24 +106,25 @@ Some vars a required to run this role:
 ```YAML
 ---
 
-install_node_exporter_install_path: "/etc/node_exporter"
-install_node_exporter_lib_path: "/usr/local/node_exporter"
-install_node_exporter_web_ssl_path:  "{{ install_node_exporter_install_path }}/ssl"
-install_node_exporter_web_config_file: "{{ install_node_exporter_install_path }}/web-config.yml"
-install_node_exporter_loglevel: "debug"
+install_node_exporter__install_path: "/etc/node_exporter"
+install_node_exporter__lib_path: "/usr/local/node_exporter"
+install_node_exporter__web_ssl_path:  "{{ install_node_exporter__install_path }}/ssl"
+install_node_exporter__web_config_file: "{{ install_node_exporter__install_path }}/web-config.yml"
+install_node_exporter__loglevel: "debug"
+install_node_exporter__log_path: "/var/log/node_exporter"
 
-install_node_exporter_version: "1.6.1"
-install_node_exporter_architecture: "amd64"
+install_node_exporter__version: "1.6.1"
+install_node_exporter__architecture: "amd64"
 
-install_node_exporter_user: "node_exporter"
-install_node_exporter_group: "node_exporter"
+install_node_exporter__user: "root"
+install_node_exporter__group: "root"
 
-install_node_exporter_ssl: true
-install_node_exporter_ssl_key: "{{ install_node_exporter_web_ssl_path }}/my-node_exporter-cluster.domain.tld/my-node_exporter-cluster.domain.tld.pem.key"
-install_node_exporter_ssl_crt: "{{ install_node_exporter_web_ssl_path }}/my-node_exporter-cluster.domain.tld/my-node_exporter-cluster.domain.tld.pem.crt"
+install_node_exporter__ssl: true
+install_node_exporter__ssl_key: "{{ install_node_exporter__web_ssl_path }}/my-node_exporter-cluster.domain.tld/my-node_exporter-cluster.domain.tld.pem.key"
+install_node_exporter__ssl_crt: "{{ install_node_exporter__web_ssl_path }}/my-node_exporter-cluster.domain.tld/my-node_exporter-cluster.domain.tld.pem.crt"
 
-install_node_exporter_port: 9100
-install_node_exporter_stats_exports:
+install_node_exporter__port: 9100
+install_node_exporter__stats_exports:
   - "cpu" #Exposes CPU statistics
   - "cpufreq" #Exposes CPU frequency statistics
   - "diskstats" #Exposes disk I/O statistics.
@@ -138,9 +139,9 @@ install_node_exporter_stats_exports:
   - "uname"
   - "time"
 
-install_node_exporter_basic_auth: true
-install_node_exporter_basic_auth_login: "admin"
-install_node_exporter_basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuMT6hGkkNOcxLtLRWV6nfSZWfonGb69W"
+install_node_exporter__basic_auth: true
+install_node_exporter__basic_auth_login: "admin"
+install_node_exporter__basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuMT6hGkkNOcxLtLRWV6nfSZWfonGb69W"
 
 ```
 
@@ -153,25 +154,26 @@ In order to surchage vars, you have multiples possibilities but for mains cases 
 ```YAML
 # From inventory
 ---
-inv_prepare_host_users:
-  - login: "root"
-    group: "node_exporter"
 
-inv_install_node_exporter_install_path: "/etc/node_exporter"
-inv_install_node_exporter_lib_path: "/usr/local/node_exporter"
-inv_install_node_exporter_web_ssl_path:  "{{ inv_install_node_exporter_install_path }}/ssl"
-inv_install_node_exporter_web_config_file: "{{ inv_install_node_exporter_install_path }}/web-config.yml"
-inv_install_node_exporter_loglevel: "debug"
+inv_install_node_exporter__install_path: "/etc/node_exporter"
+inv_install_node_exporter__lib_path: "/usr/local/node_exporter"
+inv_install_node_exporter__web_ssl_path:  "{{ inv_install_node_exporter__install_path }}/ssl"
+inv_install_node_exporter__web_config_file: "{{ inv_install_node_exporter__install_path }}/web-config.yml"
+inv_install_node_exporter__loglevel: "debug"
+inv_install_node_exporter__log_path: "/var/log/node_exporter"
 
-inv_install_node_exporter_version: "1.6.1"
-inv_install_node_exporter_architecture: "amd64"
+inv_install_node_exporter__version: "1.6.1"
+inv_install_node_exporter__architecture: "amd64"
 
-inv_install_node_exporter_ssl: true
-inv_install_node_exporter_ssl_key: "{{ inv_install_node_exporter_web_ssl_path }}/my-node_exporter-cluster.domain.tld/my-node_exporter-cluster.domain.tld.pem.key"
-inv_install_node_exporter_ssl_crt: "{{ inv_install_node_exporter_web_ssl_path }}/my-node_exporter-cluster.domain.tld/my-node_exporter-cluster.domain.tld.pem.crt"
+inv_install_node_exporter__user: "root"
+inv_install_node_exporter__group: "root"
 
-inv_install_node_exporter_port: 9100
-inv_install_node_exporter_stats_exports:
+inv_install_node_exporter__ssl: true
+inv_install_node_exporter__ssl_key: "{{ inv_install_node_exporter__web_ssl_path }}/my-node_exporter-cluster.domain.tld/my-node_exporter-cluster.domain.tld.pem.key"
+inv_install_node_exporter__ssl_crt: "{{ inv_install_node_exporter__web_ssl_path }}/my-node_exporter-cluster.domain.tld/my-node_exporter-cluster.domain.tld.pem.crt"
+
+inv_install_node_exporter__port: 9100
+inv_install_node_exporter__stats_exports:
   - "cpu" #Exposes CPU statistics
   - "cpufreq" #Exposes CPU frequency statistics
   - "diskstats" #Exposes disk I/O statistics.
@@ -186,17 +188,16 @@ inv_install_node_exporter_stats_exports:
   - "uname"
   - "time"
 
-inv_install_node_exporter_basic_auth: true
-inv_install_node_exporter_basic_auth_login: "admin"
-inv_install_node_exporter_basic_auth_password: "admin" #for test
-inv_install_node_exporter_basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuMT6hGkkNOcxLtLRWV6nfSZWfonGb69W"
+inv_install_node_exporter__basic_auth: true
+inv_install_node_exporter__basic_auth_login: "admin"
+inv_install_node_exporter__basic_auth_password_hash: "$2a$10$0M5Kx/KYWNIExB1AfP0wDuMT6hGkkNOcxLtLRWV6nfSZWfonGb69W"
 
 ```
 
 ```YAML
 # From AWX / Tower
 ---
-all vars from to put/from AWX / Tower
+
 ```
 
 ### Run
@@ -208,21 +209,25 @@ To run this role, you can copy the molecule/default/converge.yml playbook and ad
   tags:
     - "labocbz.install_node_exporter"
   vars:
-    install_node_exporter_install_path: "{{ inv_install_node_exporter_install_path }}"
-    install_node_exporter_lib_path: "{{ inv_install_node_exporter_lib_path }}"
-    install_node_exporter_web_ssl_path: "{{ inv_install_node_exporter_web_ssl_path }}"
-    install_node_exporter_web_config_file: "{{ inv_install_node_exporter_web_config_file }}"
-    install_node_exporter_loglevel: "{{ inv_install_node_exporter_loglevel }}"
-    install_node_exporter_version: "{{ inv_install_node_exporter_version }}"
-    install_node_exporter_architecture: "{{ inv_install_node_exporter_architecture }}"
-    install_node_exporter_ssl: "{{ inv_install_node_exporter_ssl }}"
-    install_node_exporter_ssl_key: "{{ inv_install_node_exporter_ssl_key }}"
-    install_node_exporter_ssl_crt: "{{ inv_install_node_exporter_ssl_crt }}"
-    install_node_exporter_port: "{{ inv_install_node_exporter_port }}"
-    install_node_exporter_stats_exports: "{{ inv_install_node_exporter_stats_exports }}"
-    install_node_exporter_basic_auth: "{{ inv_install_node_exporter_basic_auth }}"
-    install_node_exporter_basic_auth_login: "{{ inv_install_node_exporter_basic_auth_login }}"
-    install_node_exporter_basic_auth_password_hash: "{{ inv_install_node_exporter_basic_auth_password_hash }}"
+    inv_install_node_exporter__install_path: "{{ inv_install_node_exporter__install_path }}"
+    inv_install_node_exporter__lib_path: "{{ inv_install_node_exporter__lib_path }}"
+    inv_install_node_exporter__web_ssl_path: "{{ inv_install_node_exporter__web_ssl_path }}"
+    inv_install_node_exporter__web_config_file: "{{ inv_install_node_exporter__web_config_file }}"
+    inv_install_node_exporter__web_config_file: "{{ inv_install_node_exporter__web_config_file }}"
+    inv_install_node_exporter__loglevel: "{{ inv_install_node_exporter__loglevel }}"
+    inv_install_node_exporter__log_path: "{{ inv_install_node_exporter__log_path }}"
+    inv_install_node_exporter__version: "{{ inv_install_node_exporter__version }}"
+    inv_install_node_exporter__architecture: "{{ inv_install_node_exporter__architecture }}"
+    inv_install_node_exporter__user: "{{ inv_install_node_exporter__user }}"
+    inv_install_node_exporter__group: "{{ inv_install_node_exporter__group }}"
+    inv_install_node_exporter__ssl: "{{ inv_install_node_exporter__ssl }}"
+    inv_install_node_exporter__ssl_key: "{{ inv_install_node_exporter__ssl_key }}"
+    inv_install_node_exporter__ssl_crt: "{{ inv_install_node_exporter__ssl_crt }}"
+    inv_install_node_exporter__port: "{{ inv_install_node_exporter__port }}"
+    inv_install_node_exporter__stats_exports: "{{ inv_install_node_exporter__stats_exports }}"
+    inv_install_node_exporter__basic_auth: "{{ inv_install_node_exporter__basic_auth }}"
+    inv_install_node_exporter__basic_auth_login: "{{ inv_install_node_exporter__basic_auth_login }}"
+    inv_install_node_exporter__basic_auth_password_hash: "{{ inv_install_node_exporter__basic_auth_password_hash }}"
   ansible.builtin.include_role:
     name: "labocbz.install_node_exporter"
 ```
@@ -256,6 +261,18 @@ Here you can put your change to keep a trace of your work and decisions.
 ### 2023-12-14: System users
 
 * Role can now use system users and address groups
+
+### 2024-02-22: New CICD and fixes
+
+* Added support for Ubuntu 22
+* Added support for Debian 11/22
+* Edited vars for linting (role name and __)
+* Added generic support for Docker dind (can add used for obscures reasons ... user in use)
+* Fix idempotency
+* Added informations for UID and GID for user/groups
+* Added support for user password creation (on_create)
+* New CI, need work on tag and releases
+* CI use now Sonarqube
 
 ## Authors
 

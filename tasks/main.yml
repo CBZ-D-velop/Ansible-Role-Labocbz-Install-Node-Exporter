@@ -3,46 +3,47 @@
   notify: "Enable and start Node_Exporter"
   block:
     - name: "Create the node_exporter user"
+      when: install_node_exporter__user != "root"
       ansible.builtin.user:
-        name: "{{ install_node_exporter_user }}"
-        groups: "{{ install_node_exporter_group }}"
+        name: "{{ install_node_exporter__user }}"
+        groups: "{{ install_node_exporter__group }}"
         append: true
         system: true
         create_home: false
 
     - name: "Install package from Github"
       block:
-        - name: "Check if folder {{ install_node_exporter_lib_path }} exist"
+        - name: "Check if folder exist {{ install_node_exporter__lib_path }}"
           register: folder_check
           ansible.builtin.stat:
-            path: "{{ install_node_exporter_lib_path }}"
+            path: "{{ install_node_exporter__lib_path }}"
 
         - name: "Create lib path"
           ansible.builtin.file:
-            path: "{{ install_node_exporter_lib_path }}"
+            path: "{{ install_node_exporter__lib_path }}"
             state: directory
             recurse: yes
             mode: "0700"
-            group: "{{ install_node_exporter_group }}"
-            owner: "{{ install_node_exporter_user }}"
+            group: "{{ install_node_exporter__group }}"
+            owner: "{{ install_node_exporter__user }}"
 
         - name: "Download node_exporter binary to local folder"
           ansible.builtin.unarchive:
-            src: "https://github.com/prometheus/node_exporter/releases/download/v{{ install_node_exporter_version }}/node_exporter-{{ install_node_exporter_version }}.linux-{{ install_node_exporter_architecture }}.tar.gz"
-            dest: "{{ install_node_exporter_lib_path }}"
+            src: "https://github.com/prometheus/node_exporter/releases/download/v{{ install_node_exporter__version }}/node_exporter-{{ install_node_exporter__version }}.linux-{{ install_node_exporter__architecture }}.tar.gz"
+            dest: "{{ install_node_exporter__lib_path }}"
             mode: "0700"
-            group: "{{ install_node_exporter_group }}"
-            owner: "{{ install_node_exporter_user }}"
+            group: "{{ install_node_exporter__group }}"
+            owner: "{{ install_node_exporter__user }}"
             remote_src: true
 
         - name: "Create a sym link to the bin"
           ansible.builtin.file:
-            src: "{{ install_node_exporter_lib_path }}/node_exporter-{{ install_node_exporter_version }}.linux-{{ install_node_exporter_architecture }}/node_exporter"
+            src: "{{ install_node_exporter__lib_path }}/node_exporter-{{ install_node_exporter__version }}.linux-{{ install_node_exporter__architecture }}/node_exporter"
             dest: "/usr/bin/node_exporter"
             state: link
             mode: "0700"
-            group: "{{ install_node_exporter_group }}"
-            owner: "{{ install_node_exporter_user }}"
+            group: "{{ install_node_exporter__group }}"
+            owner: "{{ install_node_exporter__user }}"
 
     - name: "Import Node_Exporter service file"
       ansible.builtin.template:
@@ -57,45 +58,45 @@
       register: output
       changed_when: output.size < 0
       ansible.builtin.file:
-        path: "{{ install_node_exporter_log_path }}"
+        path: "{{ install_node_exporter__log_path }}"
         state: directory
         recurse: yes
         mode: "0700"
-        group: "{{ install_node_exporter_group }}"
-        owner: "{{ install_node_exporter_user }}"
+        group: "{{ install_node_exporter__group }}"
+        owner: "{{ install_node_exporter__user }}"
 
 - name: "Configure Node_Exporter"
   notify: "Restart Node_Exporter"
   block:
-    - name: "Check if folder {{ install_node_exporter_install_path }} exist"
+    - name: "Check if folder exist {{ install_node_exporter__install_path }}"
       register: folder_check
       ansible.builtin.stat:
-        path: "{{ install_node_exporter_install_path }}"
+        path: "{{ install_node_exporter__install_path }}"
 
-    - name: "Create {{ install_node_exporter_install_path }}"
+    - name: "Create {{ install_node_exporter__install_path }}"
       when: not folder_check.stat.exists
       ansible.builtin.file:
-        path: "{{ install_node_exporter_install_path }}"
+        path: "{{ install_node_exporter__install_path }}"
         state: directory
-        owner: "{{ install_node_exporter_user }}"
-        group: "{{ install_node_exporter_group }}"
+        owner: "{{ install_node_exporter__user }}"
+        group: "{{ install_node_exporter__group }}"
         mode: "0700"
 
     - name: "Import Node_Exporter web configuration file"
-      when: (install_node_exporter_ssl | default(false)) or (install_node_exporter_basic_auth | default(false))
+      when: (install_node_exporter__ssl | default(false)) or (install_node_exporter__basic_auth | default(false))
       ansible.builtin.template:
         src: "templates/web-config.yml.j2"
-        dest: "{{ install_node_exporter_web_config_file }}"
+        dest: "{{ install_node_exporter__web_config_file }}"
         mode: "0700"
-        group: "{{ install_node_exporter_group }}"
-        owner: "{{ install_node_exporter_user }}"
+        group: "{{ install_node_exporter__group }}"
+        owner: "{{ install_node_exporter__user }}"
         lstrip_blocks: yes
 
     - name: "Apply permissions on Node_Exporter scrapes dir"
       ansible.builtin.file:
-        path: "{{ install_node_exporter_install_path }}"
+        path: "{{ install_node_exporter__install_path }}"
         state: directory
         recurse: yes
-        group: "{{ install_node_exporter_group }}"
-        owner: "{{ install_node_exporter_user }}"
+        group: "{{ install_node_exporter__group }}"
+        owner: "{{ install_node_exporter__user }}"
         mode: "0700"

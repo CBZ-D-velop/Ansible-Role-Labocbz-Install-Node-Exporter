@@ -10,18 +10,18 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-User={{ install_node_exporter_user }}
-Group={{ install_node_exporter_group }}
+User={{ install_node_exporter__user }}
+Group={{ install_node_exporter__group }}
 Type=simple
 ExecStart=/bin/sh -c '/usr/bin/node_exporter \
-    --web.config.file={{ install_node_exporter_web_config_file }} \
-    --web.listen-address=:{{ install_node_exporter_port }} \
+    --web.config.file={{ install_node_exporter__web_config_file }} \
+    --web.listen-address=:{{ install_node_exporter__port }} \
     --collector.disable-defaults \
-{% for node_exporter_stats_export in install_node_exporter_stats_exports %}
+{% for node_exporter_stats_export in install_node_exporter__stats_exports %}
     --collector.{{ node_exporter_stats_export }} \
 {% endfor %}
-    --log.level={{ install_node_exporter_loglevel }} \
-    > {{ install_node_exporter_log_path }}/node_exporter.log 2>&1'
+    --log.level={{ install_node_exporter__loglevel }} \
+    > {{ install_node_exporter__log_path }}/node_exporter.log 2>&1'
 
 Restart=always
 
