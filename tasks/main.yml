@@ -93,6 +93,8 @@
         lstrip_blocks: yes
 
     - name: "Apply permissions on Node_Exporter scrapes dir"
+      register: output
+      changed: false
       ansible.builtin.file:
         path: "{{ install_node_exporter__install_path }}"
         state: directory
