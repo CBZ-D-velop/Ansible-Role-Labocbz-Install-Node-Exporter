@@ -19,6 +19,7 @@
             path: "{{ install_node_exporter__lib_path }}"
 
         - name: "Create lib path"
+          when: not folder_check.stat.exists
           ansible.builtin.file:
             path: "{{ install_node_exporter__lib_path }}"
             state: directory
@@ -93,6 +94,8 @@
         lstrip_blocks: yes
 
     - name: "Apply permissions on Node_Exporter scrapes dir"
+      register: output
+      changed_when: false
       ansible.builtin.file:
         path: "{{ install_node_exporter__install_path }}"
         state: directory
